@@ -4,7 +4,7 @@ import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
 } from 'aws-lambda';
-import { createAmazonS3Bucket } from './helpers/s3';
+import { createAmazonS3PresignedURL } from './helpers/s3';
 
 export const helloCb = (
   event: APIGatewayProxyEvent,
@@ -12,15 +12,13 @@ export const helloCb = (
   cb: Callback,
 ): void => cb(null, { message: 'Hello use callback' });
 
-export const helloAsync = async (
-  event: APIGatewayProxyEvent,
-  // context: Context,
-  // cb: Callback,
-): Promise<APIGatewayProxyResult> => {
-  console.log(event);
-  await createAmazonS3Bucket();
+export const helloAsync = async (): Promise<APIGatewayProxyResult> => {
+  const presignedUrl = await createAmazonS3PresignedURL();
   return {
     statusCode: 200,
-    body: 'Hello use async',
+    body: presignedUrl,
   };
 };
+// event: APIGatewayProxyEvent,
+// context: Context,
+// cb: Callback,
