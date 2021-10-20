@@ -32,4 +32,4 @@ export const getPresignedURLx = async (): Promise<string> => {
   const presignedUrl = await createAmazonS3PresignedURL();
   return presignedUrl;
 };
-export const hello = () => 'hello';
+export const hello = async () => 'hello';
