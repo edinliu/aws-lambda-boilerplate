@@ -4,6 +4,8 @@ const env = {
 };
 
 const rules = {
+  'import/prefer-default-export': 'off',
+  'no-continue': 'off',
   'no-underscore-dangle': [
     'error',
     {

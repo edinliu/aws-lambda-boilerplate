@@ -3,25 +3,22 @@ frameworkVersion: '2.61.0'
 
 # Add the serverless-webpack plugin
 plugins:
+  - serverless-dotenv-plugin
   - serverless-webpack
   - serverless-offline
-
+  
 provider:
   name: aws
   runtime: nodejs14.x
   lambdaHashingVersion: 20201221
+  environment:
+    FIREBASE_CREDENTIALS: ${ssm:/FIREBASE_CREDENTIALS}
+
 functions:
-  helloAsync:
-    handler: handler.helloAsync
+  getPresignedURL:
+    handler: controllers/images.getPresignedURL
     events:
-      - http:
+      - httpApi:
           method: get
-          path: hello-async
-          integration: lambda
-  helloCb:
-    handler: handler.helloCb
-    events:
-      - http:
-          method: get
-          path: hello-cb
+          path: images/presigned-url
           integration: lambda
